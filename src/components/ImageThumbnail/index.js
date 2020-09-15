@@ -62,7 +62,7 @@ class ImageThumbnail extends React.PureComponent {
             classname += ' no-image'
             return (
                 <div className={
-                    classNames({'col-md-3': this.props.modal},{'col-md-6': !this.props.modal},' col-xs-12')} onClick={this.selectThis} id={this.props.data.id}>
+                    classNames({'col-md-3': this.props.modal},{'col-md-6': !this.props.modal},' col-xs-12')} onClick={this.selectThis} id={this.props.data.id} style={{display: 'none'}}>
                     <div className={classname}>
                         <div className="thumbnail" style={{backgroundColor: 'lightgray'}} />
                         <div className="no-image-text"><FormattedMessage id="no-image" /></div>
@@ -98,33 +98,33 @@ class ImageThumbnail extends React.PureComponent {
             >
                 <div className={classname} style={prev}>
                     <Button
-                        aria-label={getStringWithLocale(this.props.data, 'name', locale)}
+                        aria-label={this.context.intl.formatMessage({id: `thumbnail-picture-select`}) + '' + getStringWithLocale(this.props.data, 'name', locale)}
                         className="thumbnail"
                         style={bgStyle}
                         onClick={this.selectThis}
                     />
 
                     {this.props.modal && (
-                        <div className='name edit-image' >
+                        <div className='name' >
                             <span className={'image-title'}>
                                 {getStringWithLocale(this.props.data, 'name', locale) || <FormattedMessage id="edit-image"/>}
                             </span>
-                            <div className='buttonit'>
+                            <div className='name-buttons'>
                                 <button
                                     className={'btn'}
                                     onClick={() => this.setState({edit: true})}
+                                    aria-label={this.context.intl.formatMessage({id: `thumbnail-picture-edit`})}
                                 >
-                                    <span className='glyphicon glyphicon-wrench'  style={{color: 'white', marginRight: '0'}}/>
+                                    <span className='glyphicon glyphicon-cog' aria-hidden style={{color: 'white', marginRight: '0'}}/>
                                 </button>
                                 <button
                                     className={'btn'}
                                     onClick={this.handleDelete}
+                                    aria-label={this.context.intl.formatMessage({id: `thumbnail-picture-delete`})}
                                 >
-                                    <span className='glyphicon glyphicon-remove' style={{color: 'white', marginRight: '0'}}/>
+                                    <span className='glyphicon glyphicon-trash' aria-hidden style={{color: 'white', marginRight: '0'}}/>
                                 </button>
                             </div>
-
-
                         </div>
                     )}
                 </div>
@@ -146,6 +146,10 @@ ImageThumbnail.propTypes = {
     action: PropTypes.func,
     user: PropTypes.object,
     close: PropTypes.func,
+}
+
+ImageThumbnail.contextTypes = {
+    intl: PropTypes.object,
 }
 
 const mapDispatchToProps = (dispatch) => ({

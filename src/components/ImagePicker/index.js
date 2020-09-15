@@ -22,23 +22,19 @@ const PreviewImage = (props) => {
     if (backgroundImage) {
         return (
             <Fragment>
-                <Button
+                <div
                     className='image-picker--preview'
                     style={backgroundStyle}
-                    onClick={() => props.openModalMethod()}
                 />
             </Fragment>
         );
     } else {
         return (
             <Fragment>
-                <Button
-                    className='image-picker--preview'
-                    type='submit'
-                    onClick={() => props.openModalMethod()}>
-                    <span className='glyphicon glyphicon-download-alt' aria-hidden='true'></span>
-                    <FormattedMessage id='choose-image' />
-                </Button>
+                <div
+                    className='image-picker--preview'>
+                    <FormattedMessage id='no-image' />
+                </div>
             </Fragment>
         );
     }
@@ -198,45 +194,13 @@ export class ImagePicker extends Component {
                     id='dialog1'
                     aria-modal='true'>
 
-                    <ModalHeader className='modalH1' tag='h1' close={closebtn}>
+                    <ModalHeader tag='h1' close={closebtn}>
                         <FormattedMessage id='event-image-title' />
                     </ModalHeader>
                     <ModalBody>
-                        <hr />
                         <ModalHeader tag='h3' className='image-picker--dialog-title'>
                             <FormattedMessage id='use-existing-image' />
                         </ModalHeader>
-
-                        <div className={'button-row'}>
-                            <Button
-                                className='delete'
-                                variant='contained'
-                                onClick={() => this.handleDelete()}
-                                disabled={isEmpty(this.props.editor.values.image)}>
-                                <FormattedMessage id='delete-from-filesystem' />
-                            </Button>
-
-                            <div className={'wrapper-right'}>
-                                <Button
-                                    className='edit'
-                                    variant='contained'
-                                    disabled={isEmpty(this.props.editor.values.image)}
-                                    onClick={() => this.handleEdit()}>
-                                    <FormattedMessage id='edit-selected-image' />
-                                </Button>
-                                {false &&
-                                <Button
-                                    className='attach'
-                                    variant='contained'
-                                    onClick={this.closeGalleryModal}
-                                    color='primary'>
-                                    <FormattedMessage id='attach-image-to-event' />
-                                </Button>
-                                }
-
-                            </div>
-                        </div>
-
                         <ImageGalleryGrid
                             editor={this.props.editor}
                             user={this.props.user}
@@ -282,7 +246,6 @@ ImagePicker.contextTypes = {
 
 PreviewImage.propTypes = {
     backgroundImage: PropTypes.string,
-    openModalMethod: PropTypes.func,
 };
 
 const mapStateToProps = (state) => ({

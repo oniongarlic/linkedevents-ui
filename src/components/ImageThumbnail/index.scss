@@ -5,20 +5,11 @@
     height: 228px;
     margin-top: 15px;
     margin-bottom: 15px;
-    // overflow: hidden;
     border: 1px solid gray;
-    &:has(.selected) {
-        // background-color: cyan;
-    }
+
 
     &.selected {
         border: 4px solid $hel-coat;
-        &:only-child {
-            .btn {
-                // filter: grayscale(80%);
-            }
-
-        }
     }
 
     .thumbnail {
@@ -33,34 +24,25 @@
         cursor: pointer;
         &:focus, &:hover {
             border: 4px solid $hel-coat;
-            //outline: $hel-coat solid 4px;
         }
     }
     &:hover, &:active,&:focus, &:focus-within {
         .name {
             display: flex;
             max-height: 100px;
-            &.edit-image {
                 .image-title {
                     display: block;
                 }
-                .buttonit {
+                .name-buttons {
                     .btn {
                         display: inline-block;
-                        &:hover, &:focus {
-                            // background-color: var(--main-color);
-                        }
                     }
                 }
-
-            }
         }
     }
 
     .name {
         display: flex;
-        // align-items: center;
-        // justify-content: flex-start;
         flex-direction: column;
         justify-content: space-around;
         color: #ffffff;
@@ -69,32 +51,30 @@
         position: absolute;
         bottom: 0;
         left: 0;
-        // height: 77px;
         max-height: 0px;
         height: auto;
         transition: max-height 0.1s ease-in;
         width: 100%;
-        // padding: 0 22px;
         background: rgba(0,0,0,0.5);
 
-        &.edit-image {
-            cursor: pointer;
 
-            .buttonit {
+
+            .name-buttons {
                 display: flex;
                 .btn {
                     display: none;
-                    // width: 50px;
+                    background-color: transparent;
                     width: 100%;
                     height: 50px;
                     border-radius: 0px;
                     &:hover, &:focus {
-                        background-color: var(--main-color);
+                        background-color: $hel-coat;
+                    }
+                    .glyphicon {
+                        margin: 0px;
                     }
                 }
             }
-
-
 
             &:hover {
                 opacity: 0.95;
@@ -122,34 +102,25 @@
         height: 77px;
         width: 100%;
     }
-}
+
 
 ul.pagination {
     flex-wrap: wrap;
 }
 
-
-.button-row {
-    display: inline-grid;
-    grid-template-columns: auto auto;
-    margin: 1rem 0;
-    padding: 0 15px;
-    width: 100%;
-
-    button {
-        display: inline-block;
-    }
-
-    .wrapper-right {
-        display: inline-block;
-        justify-self: end;
-    }
-
-    .delete {
-        justify-self: start;
-    }
-
-    .edit {
-        margin-right: 1rem;
+@media only screen and (max-width: 1200px) {
+    .image-thumb {
+        .name {
+            display: flex;
+            max-height: 100px;
+            .image-title {
+                display: block;
+            }
+            .name-buttons {
+                .btn {
+                    display: inline-block;
+                }
+            }
+        }
     }
 }

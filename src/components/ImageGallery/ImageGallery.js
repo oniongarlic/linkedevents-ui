@@ -46,7 +46,7 @@ class ImageGallery extends React.Component {
         if (backgroundImage) {
             return (
                 <React.Fragment>
-                    <Button
+                    <div
                         className='image-picker--preview'
                         style={backgroundStyle}
                     />
@@ -55,9 +55,10 @@ class ImageGallery extends React.Component {
         } else {
             return (
                 <React.Fragment>
-                    <Button
-                        className='image-picker--preview'
-                    />
+                    <div
+                        className='image-picker--preview'>
+                        <FormattedMessage id='no-image'/>
+                    </div>
                 </React.Fragment>
             )
         }
@@ -79,7 +80,7 @@ class ImageGallery extends React.Component {
                         onClick={this.toggleEditModal}
                         style={{height: 'initial', marginBottom: '20px'}}
                     >
-                        Lisää kuva
+                        <FormattedMessage id='upload-new-image' />
                     </Button>
                     <Button
                         className='image-picker--preview'
@@ -87,22 +88,22 @@ class ImageGallery extends React.Component {
                         onClick={this.toggleOrgModal}
                         style={{height: 'initial'}}
                     >
-                        Valitse kuvapankista
+                        <FormattedMessage id='upload-image-select-bank' />
                     </Button>
                     <ImageEdit open={this.state.openEditModal} close={this.toggleEditModal}/>
                     <ImagePickerForm label="image-preview" name="image" loading={false} isOpen={this.state.openOrgModal} close={this.toggleOrgModal}/>
                     {true &&
                         <React.Fragment>
                             <div style={{textAlign: 'center'}}>
-                                <h3>Tai valitse tästä</h3>
+                                <FormattedMessage id='select-from-default'>{txt => <h3>{txt}</h3>}</FormattedMessage>
                             </div>
-
                             <ImageGalleryGrid
                                 user={this.props.user}
                                 editor={this.props.editor}
                                 images={defaImages}
                                 locale={'fi'}
                             />
+                            <hr />
                         </React.Fragment>
                     }
 

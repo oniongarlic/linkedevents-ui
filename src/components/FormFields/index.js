@@ -308,20 +308,12 @@ class FormFields extends React.Component {
                             selectedOption={selectedPublisher}
                             onChange={this.handleOrganizationChange}
                         />
-
                     </div>
-                    <SideField className='ImagePickerField'>
-                        <label htmlFor='image'>
-                            <h3 className='imagePicker-heading'>
-                                <FormattedMessage id="event-image"/>
-                            </h3>
-                        </label>
-                        <input id='image' type='hidden'/>
-
-
-                    </SideField>
-
                 </div>
+                
+                <FormHeader>
+                    <FormattedMessage id="event-image-title"/>
+                </FormHeader>
                 <div className='row'>
                     <ImageGallery />
                 </div>

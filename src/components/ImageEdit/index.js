@@ -9,7 +9,7 @@ import constants from 'src/constants';
 import {Button, Modal, ModalHeader, ModalBody, Input, Label} from 'reactstrap';
 import update from 'immutability-helper';
 import {getStringWithLocale} from 'src/utils/locale';
-
+import validationFn from 'src/validation/validationRules'
 
 const {CHARACTER_LIMIT, VALIDATION_RULES} = constants;
 
@@ -34,6 +34,8 @@ class ImageEdit extends React.Component {
             edit: false,
             imageFile: null,
             thumbnailUrl: null,
+            urlError: false,
+            fileSizeError: false,
         };
 
         this.getCloseButton = this.getCloseButton.bind(this);
@@ -41,7 +43,7 @@ class ImageEdit extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleLicenseChange = this.handleLicenseChange.bind(this);
         this.handleExternalImage = this.handleExternalImage.bind(this);
-
+        this.handleInputBlur = this.handleInputBlur.bind(this);
     }
 
     componentDidMount() {
@@ -107,6 +109,20 @@ class ImageEdit extends React.Component {
 
         // this.setState({thumbnailUrl: event.target.value});
         console.log(event.target.value);
+    }
+
+    handleInputBlur() {
+        const myData = document.getElementById('upload-external')
+        const formData = new FormData(myData);
+        const MyData = formData.get('externalUrl');
+        const url = MyData
+        if (!validationFn['isUrl'](undefined, url, undefined)) {
+            this.setState({urlError: true,
+            })
+            return false 
+        } else {
+            return true
+        }
     }
 
     handleExternalImageSave = () => {
@@ -363,6 +379,7 @@ class ImageEdit extends React.Component {
         const {open, close} = this.props;
         const {thumbnailUrl} = this.state;
         const thumb = this.state.thumbnailUrl || this.props.thumbnailUrl;
+        const errorMessage = this.state.urlError ? 'validation-isUrl' : 'uploaded-image-size-error';
         return (
             <React.Fragment>
                 <Modal
@@ -403,8 +420,7 @@ class ImageEdit extends React.Component {
                                                         className='file-upload--external-input'
                                                         onChange={this.handleExternalImage}
                                                         name='externalUrl'
-                                                        type='url'
-                                                        required
+                                                        onBlur={this.handleInputBlur}
 
                                                     />
                                                 </label>
@@ -415,8 +431,13 @@ class ImageEdit extends React.Component {
 
                                                     type='submit'
                                                 >
-                                                    Lataa
+                                                    <FormattedMessage id='upload-image-from-url-button' />
                                                 </Button>
+                                                {(this.state.fileSizeError || this.state.urlError) && (
+                                                    <React.Fragment>
+                                                        <FormattedMessage id={errorMessage}>{txt => <p role="alert" className='image-error'>{txt}</p>}</FormattedMessage>
+                                                    </React.Fragment>
+                                                )}
                                             </form>
                                         </div>
                                     </div>

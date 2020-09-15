@@ -60,7 +60,7 @@ export function fetchUserImages(pageSize = 100, pageNumber = null, mainPage = fa
             try {
                 dispatch(startFetching);
 
-                response = await makeImageRequest2({}, pageSize, pageNumber, 'tpr:1100');
+                response = await makeImageRequest2({}, pageSize, pageNumber, 'image:1500');
 
                 dispatch(receiveUserImagesAndMeta2(response));
             } catch (error) {
