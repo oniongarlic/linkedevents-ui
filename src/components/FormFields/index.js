@@ -29,6 +29,7 @@ import HelVideoFields from '../HelFormFields/HelVideoFields/HelVideoFields'
 import CustomDateTimeField from '../CustomFormFields/CustomDateTimeField';
 import EventMap from '../Map/EventMap';
 import classNames from 'classnames';
+import ImageGallery from '../ImageGallery/ImageGallery';
 
 // Removed material-ui/icons because it was no longer used.
 //Added isOpen for RecurringEvents modal
@@ -307,6 +308,7 @@ class FormFields extends React.Component {
                             selectedOption={selectedPublisher}
                             onChange={this.handleOrganizationChange}
                         />
+
                     </div>
                     <SideField className='ImagePickerField'>
                         <label htmlFor='image'>
@@ -315,8 +317,13 @@ class FormFields extends React.Component {
                             </h3>
                         </label>
                         <input id='image' type='hidden'/>
-                        <ImagePickerForm label="image-preview" name="image" loading={this.props.loading} />
+
+
                     </SideField>
+
+                </div>
+                <div className='row'>
+                    <ImageGallery />
                 </div>
 
                 <FormHeader>
