@@ -9,6 +9,7 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 import ImagePickerForm from '../ImagePicker';
 import {get as getIfExists} from 'lodash';
 import {fetchUserImages as fetchUserImagesAction} from 'src/actions/userImages'
+import classNames from 'classnames';
 
 class ImageGallery extends React.Component {
     constructor(props) {
@@ -71,6 +72,7 @@ class ImageGallery extends React.Component {
         let orgModals = this.state.openOrgModal ? <ImagePickerForm label="image-preview" name="image" loading={false} isOpen={this.state.openOrgModal} close={this.toggleOrgModal}/> : null;
         let orgModal = <ImagePickerForm label="image-preview" name="image" loading={ false} isOpen={ this.state.openOrgModal } close={this.toggleOrgModal}/>;
         const defaImages = {items: this.props.images.defaultImages};
+
         return (
             <React.Fragment>
                 <div className='col-sm-6'>
@@ -109,7 +111,7 @@ class ImageGallery extends React.Component {
 
                 </div>
                 <div className='col-sm-6 side-field'>
-                    <div className='image-picker'>
+                    <div className={classNames('image-picker', {'background': backgroundImage})}>
                         {this.getPreview({backgroundImage: backgroundImage})}
                     </div>
                 </div>
