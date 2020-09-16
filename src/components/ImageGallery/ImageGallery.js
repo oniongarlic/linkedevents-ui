@@ -137,7 +137,7 @@ const mapStateToProps = (state) => ({
     user: state.user,
     editor: state.editor,
 });
-
+export {ImageGallery as UnconnectedImageGallery}
 export default connect(mapStateToProps, mapDispatchToProps)(ImageGallery)
 
 

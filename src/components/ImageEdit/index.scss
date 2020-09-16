@@ -82,11 +82,21 @@
     margin: 1vh 0 1vh 0;
     color: #dc3545;
 }
+
+&--new {
+  margin-bottom: 15px;
+}
+
+ .tip {
+   margin-top: 20px;
+   margin-bottom: 20px;
+ }
   .btn {
-    padding: 16px 16px;
+    padding: 6px 6px;
     border-radius: 2px;
     font-size: 15.75px;
     background-color: #0072c6;
+    max-width: 453px;
   }
   .btn-primary.disabled:hover {
     background-color: #6c757d;

@@ -185,16 +185,13 @@ class ImageEdit extends React.Component {
             license: this.state.license,
         };
         if (!this.props.updateExisting) {
-            console.log('not updating')
             if (this.props.imageFile || this.state.imageFile) {
-                console.log('imgFile')
                 let image64 = await this.imageToBase64(this.state.imageFile);
                 imageToPost = update(imageToPost,{
                     image:{$set: image64},
                     file_name:{$set: this.state.imageFile.name.split('.')[0]},
                 });
             } else {
-                console.log('url')
                 imageToPost = update(imageToPost,{
                     url:{$set: this.state.thumbnailUrl},
                 });
@@ -202,7 +199,6 @@ class ImageEdit extends React.Component {
             this.props.postImage(imageToPost, this.props.user, null);
         }
         else {
-            console.log('elseee')
             this.props.postImage(imageToPost,this.props.user, this.props.id);
         }
         this.props.close();
@@ -396,6 +392,13 @@ class ImageEdit extends React.Component {
                             <div className='col-sm-8 image-edit-dialog--form'>
                                 {!this.props.updateExisting &&
                                 <div className='file-upload'>
+                                    <div className='tip'>
+                                        <FormattedMessage id='uploaded-image-size-tip'/>
+                                        <br/>
+                                        <FormattedMessage id='uploaded-image-size-tip2'/>
+                                        <br/>
+                                        <FormattedMessage id='uploaded-image-size-tip3'/>
+                                    </div>
                                     <div className='buttonit'>
                                         <div className='file-upload--new'>
                                             <input
@@ -405,6 +408,7 @@ class ImageEdit extends React.Component {
                                                 ref={this.hiddenFileInput}
                                             />
                                             <Button
+                                                size='xl' block
                                                 className='upload-img'
                                                 variant='contained'
                                                 onClick={() => this.clickHiddenUpload()}
@@ -425,10 +429,10 @@ class ImageEdit extends React.Component {
                                                     />
                                                 </label>
                                                 <Button
+                                                    size='xl' block
                                                     className='file-upload--external-button'
                                                     variant='contained'
                                                     color='primary'
-
                                                     type='submit'
                                                 >
                                                     <FormattedMessage id='upload-image-from-url-button' />
@@ -449,11 +453,6 @@ class ImageEdit extends React.Component {
                                     <FormattedMessage id='image-modal-image-license'>{txt => <h2>{txt}</h2>}</FormattedMessage>
                                 </div>
                                 {this.getLicense()}
-                                {(this.state.image || this.state.image) && (
-                                    <React.Fragment>
-                                        <p>lool</p>
-                                    </React.Fragment>
-                                )}
                                 <div
                                     className="image-edit-dialog--help-notice"
                                     style={{marginTop: '10px'}}

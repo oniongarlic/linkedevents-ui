@@ -31,7 +31,7 @@ async function makeImageRequest(user = {}, pageSize, pageNumber = null) {
     return result;
 }
 
-async function makeImageRequest2(user = {}, pageSize, pageNumber = null, publisher) {
+async function makeImageRequestDefault(user = {}, pageSize, pageNumber = null, publisher) {
     const params = {
         page_size: pageSize,
         page: pageNumber,
@@ -56,13 +56,12 @@ export function fetchUserImages(pageSize = 100, pageNumber = null, mainPage = fa
         return async (dispatch, getState) => {
             // const {user} = getState()
             let response;
-            console.log('yas')
             try {
                 dispatch(startFetching);
 
-                response = await makeImageRequest2({}, pageSize, pageNumber, 'image:1500');
+                response = await makeImageRequestDefault({}, pageSize, pageNumber, null);
 
-                dispatch(receiveUserImagesAndMeta2(response));
+                dispatch(receiveDefaultImagesAndMeta(response));
             } catch (error) {
                 dispatch(setFlashMsg(getIfExists(response, 'detail', 'Error fetching images'), 'error', response));
                 dispatch(receiveUserImagesFail(response));
@@ -112,7 +111,7 @@ export function receiveUserImagesAndMeta(response) {
     }
 }
 
-export function receiveUserImagesAndMeta2(response) {
+export function receiveDefaultImagesAndMeta(response) {
     return {
         type: 'defaultImages',
         items: response.data.data,
