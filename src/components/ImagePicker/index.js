@@ -1,13 +1,13 @@
 import './index.scss';
 
-import React, {Fragment, Component} from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import {FormattedMessage, injectIntl} from 'react-intl';
 import {Button, Modal, ModalHeader, ModalBody} from 'reactstrap';
 import {deleteImage} from 'src/actions/userImages.js';
 import {connect} from 'react-redux';
-import {get as getIfExists, isEmpty} from 'lodash';
+import {isEmpty} from 'lodash';
 import ImageGalleryGrid from '../ImageGalleryGrid';
 import {confirmAction} from 'src/actions/app.js';
 import {getStringWithLocale} from 'src/utils/locale';
@@ -45,7 +45,6 @@ export class ImagePicker extends Component {
     }
 
     render() {
-        const backgroundImage = getIfExists(this.props.editor.values, 'image.url', '');
         const closebtn = this.getModalCloseButton();
 
         return (
