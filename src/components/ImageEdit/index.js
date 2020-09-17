@@ -42,7 +42,6 @@ class ImageEdit extends React.Component {
         this.handleImagePost = this.handleImagePost.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleLicenseChange = this.handleLicenseChange.bind(this);
-        this.handleExternalImage = this.handleExternalImage.bind(this);
         this.handleInputBlur = this.handleInputBlur.bind(this);
     }
 
@@ -104,12 +103,6 @@ class ImageEdit extends React.Component {
             return true;
         }
     };
-
-    handleExternalImage() {
-
-        // this.setState({thumbnailUrl: event.target.value});
-        console.log(event.target.value);
-    }
 
     handleInputBlur() {
         const myData = document.getElementById('upload-external')
@@ -342,9 +335,6 @@ class ImageEdit extends React.Component {
                 <div className='license-help-text tip'>
                     <FormattedMessage id={'image-modal-image-license-explanation-event-only'}/>
                     <FormattedHTMLMessage id={'image-modal-image-license-explanation-cc-by'} />
-
-
-
                 </div>
 
             </div>

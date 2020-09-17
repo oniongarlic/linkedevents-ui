@@ -83,22 +83,12 @@ export class ImagePicker extends Component {
     }
 }
 
-ImagePicker.defaultProps = {
-    editor: {
-        values: {},
-    },
-    images: {},
-    user: {},
-    loading: true,
-};
-
 ImagePicker.propTypes = {
     editor: PropTypes.object,
     user: PropTypes.object,
     images: PropTypes.object,
     children: PropTypes.element,
     dispatch: PropTypes.func,
-    loading: PropTypes.bool,
     intl: PropTypes.object,
     locale: PropTypes.string,
     isOpen: PropTypes.bool,

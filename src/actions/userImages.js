@@ -4,6 +4,7 @@ import {setData} from './editor'
 import {setFlashMsg} from './app'
 import {get as getIfExists} from 'lodash'
 import client from '../api/client'
+import urls from '@city-assets/urls.json';
 
 /**
  * Fetch images from the API.
@@ -59,7 +60,7 @@ export function fetchUserImages(pageSize = 100, pageNumber = null, mainPage = fa
             try {
                 dispatch(startFetching);
 
-                response = await makeImageRequestDefault({}, pageSize, pageNumber, null);
+                response = await makeImageRequestDefault({}, pageSize, pageNumber, urls.defaultImagesPublisherId);
 
                 dispatch(receiveDefaultImagesAndMeta(response));
             } catch (error) {
