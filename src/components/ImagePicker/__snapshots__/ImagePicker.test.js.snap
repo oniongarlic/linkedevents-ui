@@ -464,15 +464,8 @@ exports[`Image add form ImagePicker component should render view by default 1`] 
       </ModalHeader>
       <Connect(ImageGalleryGrid)
         action={[Function]}
-        editor={
-          Object {
-            "values": Object {},
-          }
-        }
-        images={Object {}}
         locale="fi"
         modal={true}
-        user={Object {}}
       />
     </ModalBody>
   </Modal>
