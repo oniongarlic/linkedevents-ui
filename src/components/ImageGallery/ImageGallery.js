@@ -106,7 +106,7 @@ class ImageGallery extends React.Component {
                     }
 
                 </div>
-                <div className='col-sm-6 side-field'>
+                <div className='col-sm-5 side-field'>
                     <div className={classNames('image-picker', {'background': backgroundImage})}>
                         {this.getPreview({backgroundImage: backgroundImage})}
                     </div>
