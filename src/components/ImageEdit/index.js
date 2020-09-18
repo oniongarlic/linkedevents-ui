@@ -332,7 +332,7 @@ class ImageEdit extends React.Component {
                         Creative Commons BY 4.0
                     </Label>
                 </div>
-                <div className='license-help-text tip'>
+                <div className='license-help-text tip' tabIndex='0'>
                     <FormattedMessage id={'image-modal-image-license-explanation-event-only'}/>
                     <FormattedHTMLMessage id={'image-modal-image-license-explanation-cc-by'} />
                 </div>
@@ -382,14 +382,14 @@ class ImageEdit extends React.Component {
                             <div className='col-sm-8 image-edit-dialog--form'>
                                 {!this.props.updateExisting &&
                                 <div className='file-upload'>
-                                    <div className='tip'>
+                                    <div className='tip' tabIndex='0'>
                                         <FormattedMessage id='uploaded-image-size-tip'/>
                                         <br/>
                                         <FormattedMessage id='uploaded-image-size-tip2'/>
                                         <br/>
                                         <FormattedMessage id='uploaded-image-size-tip3'/>
                                     </div>
-                                    <div className='buttonit'>
+                                    <div className='file-upload-buttons'>
                                         <div className='file-upload--new'>
                                             <input
                                                 onChange={(e) => this.handleUpload(e)}
@@ -439,16 +439,12 @@ class ImageEdit extends React.Component {
                                 }
 
                                 {this.getFields()}
-                                <div style={{marginTop: '16px'}}>
+                                <div className='help-license'>
                                     <FormattedMessage id='image-modal-image-license'>{txt => <h2>{txt}</h2>}</FormattedMessage>
                                 </div>
                                 {this.getLicense()}
-                                <div
-                                    className="image-edit-dialog--help-notice"
-                                    style={{marginTop: '10px'}}
-                                >
+                                <div className="help-notice">
                                     <FormattedHTMLMessage id={'image-modal-view-terms-paragraph-text'}/>
-
                                 </div>
                             </div>
                             <img className="col-sm-4 image-edit-dialog--image" src={thumb} alt={getStringWithLocale(this.state.image,'altText')} />

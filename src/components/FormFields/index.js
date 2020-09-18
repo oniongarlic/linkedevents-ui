@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import React from 'react'
 import {FormattedMessage} from 'react-intl'
 import CopyToClipboard from 'react-copy-to-clipboard'
-import ImagePickerForm from '../ImagePicker'
 import {
     MultiLanguageField,
     HelTextField,
@@ -308,7 +307,7 @@ class FormFields extends React.Component {
                     <FormattedMessage id="event-image-title"/>
                 </FormHeader>
                 <div className='row'>
-                    <ImageGallery />
+                    <ImageGallery locale={currentLocale}/>
                 </div>
                 <FormHeader>
                     <FormattedMessage id="event-umbrella" className=''/>

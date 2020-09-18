@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImageGalleryGrid from '../ImageGalleryGrid';
 import ImageEdit from '../ImageEdit';
-
+import './index.scss';
 import {connect} from 'react-redux';
 import {Button} from 'reactstrap';
 import {FormattedMessage, injectIntl} from 'react-intl';
@@ -67,28 +67,24 @@ class ImageGallery extends React.Component {
 
     render() {
         const backgroundImage = getIfExists(this.props.editor.values,'image.url', '');
-        let editModals = this.state.openEditModal ? <ImageEdit close={this.toggleEditModal}/> : null;
-        let editModal = <ImageEdit open={this.state.openEditModal} close={this.toggleEditModal}/>;
-        let orgModals = this.state.openOrgModal ? <ImagePickerForm label="image-preview" name="image" loading={false} isOpen={this.state.openOrgModal} close={this.toggleOrgModal}/> : null;
-        let orgModal = <ImagePickerForm label="image-preview" name="image" loading={ false} isOpen={ this.state.openOrgModal } close={this.toggleOrgModal}/>;
-        const defaImages = {items: this.props.images.defaultImages};
+        const defaultImages = {items: this.props.images.defaultImages};
 
         return (
             <React.Fragment>
-                <div className='col-sm-6'>
+                <div className='col-sm-6 imageGallery'>
                     <Button
-                        className='image-picker--preview'
-                        type='submit'
+                        className='toggleEdit'
+                        size='lg'
+                        block
                         onClick={this.toggleEditModal}
-                        style={{height: 'initial', marginBottom: '20px'}}
                     >
                         <FormattedMessage id='upload-new-image' />
                     </Button>
                     <Button
-                        className='image-picker--preview'
-                        type='submit'
+                        className='toggleOrg'
+                        size='lg'
+                        block
                         onClick={this.toggleOrgModal}
-                        style={{height: 'initial'}}
                     >
                         <FormattedMessage id='upload-image-select-bank' />
                     </Button>
@@ -96,14 +92,14 @@ class ImageGallery extends React.Component {
                     <ImagePickerForm label="image-preview" name="image" loading={false} isOpen={this.state.openOrgModal} close={this.toggleOrgModal}/>
                     {true &&
                         <React.Fragment>
-                            <div style={{textAlign: 'center'}}>
+                            <div className='image-select-default'>
                                 <FormattedMessage id='select-from-default'>{txt => <h3>{txt}</h3>}</FormattedMessage>
                             </div>
                             <ImageGalleryGrid
                                 user={this.props.user}
                                 editor={this.props.editor}
-                                images={defaImages}
-                                locale={'fi'}
+                                images={defaultImages}
+                                locale={this.props.locale}
                             />
                             <hr />
                         </React.Fragment>
@@ -126,6 +122,7 @@ ImageGallery.propTypes = {
     editor: PropTypes.object,
     images: PropTypes.object,
     fetchUserImages: PropTypes.func,
+    locale: PropTypes.string,
 };
 
 const mapDispatchToProps = (dispatch) => ({
