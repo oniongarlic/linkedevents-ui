@@ -228,7 +228,13 @@ class FormFields extends React.Component {
                     <FormattedMessage id="event-description-fields-header"/>
                 </FormHeader>
 
-                <div className="row">
+                <div className="row event-row">
+                    <SideField>
+                        <div className="tip">
+                            <p><FormattedMessage id="editor-tip-event-description"/></p>
+                            <FormattedMessage id="editor-tip-event-description1"/>
+                        </div>
+                    </SideField>
                     <div className="col-sm-6">
                         <MultiLanguageField
                             id='event-headline'
