@@ -309,7 +309,7 @@ class FormFields extends React.Component {
                 </FormHeader>
                 <div className='row'>
                     <ImageGallery />
-
+                </div>
                 <FormHeader>
                     <FormattedMessage id="event-umbrella" className=''/>
                 </FormHeader>
@@ -702,6 +702,7 @@ class FormFields extends React.Component {
         )
     }
 }
+
 
 FormFields.propTypes = {
     intl: PropTypes.object,
