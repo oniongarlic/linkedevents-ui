@@ -332,7 +332,7 @@ class ImageEdit extends React.Component {
                         Creative Commons BY 4.0
                     </Label>
                 </div>
-                <div className='license-help-text tip' tabIndex='0'>
+                <div className='license-help-text tip'>
                     <FormattedMessage id={'image-modal-image-license-explanation-event-only'}/>
                     <FormattedHTMLMessage id={'image-modal-image-license-explanation-cc-by'} />
                 </div>
@@ -382,12 +382,14 @@ class ImageEdit extends React.Component {
                             <div className='col-sm-8 image-edit-dialog--form'>
                                 {!this.props.updateExisting &&
                                 <div className='file-upload'>
-                                    <div className='tip' tabIndex='0'>
-                                        <FormattedMessage id='uploaded-image-size-tip'/>
-                                        <br/>
-                                        <FormattedMessage id='uploaded-image-size-tip2'/>
-                                        <br/>
-                                        <FormattedMessage id='uploaded-image-size-tip3'/>
+                                    <div className='tip'>
+                                        <p>
+                                            <FormattedMessage id='uploaded-image-size-tip'>{txt => txt}</FormattedMessage>
+                                            <br/>
+                                            <FormattedMessage id='uploaded-image-size-tip2'>{txt => txt}</FormattedMessage>
+                                            <br/>
+                                            <FormattedMessage id='uploaded-image-size-tip3'>{txt => txt}</FormattedMessage>
+                                        </p>
                                     </div>
                                     <div className='file-upload-buttons'>
                                         <div className='file-upload--new'>
