@@ -344,60 +344,6 @@ export class EventListing extends React.Component {
                     </div>
                 </div>
                 }
-                {/* !isRegularUser &&
-                <div className='user-events-toggle'>
-                    <Input
-                        id='user-events-toggle'
-                        type='checkbox'
-                        color="primary"
-                        onChange={this.toggleUserEvents}
-                        checked={showCreatedByUser}
-                    />
-                    <Label htmlFor='user-events-toggle'>
-                        {<FormattedMessage id={'user-events-toggle'} />}</Label>
-                    <div className='user-events-filter'>
-                        <FormattedMessage id='filter-event-languages'>{txt => <h2>{txt}</h2>}</FormattedMessage>
-                        <Label>
-                            <FormattedMessage id='filter-event-all'/>
-                            <Input
-                                name='radiogroup'
-                                type='radio'
-                                value='all'
-                                onChange={this.toggleEventLanguages}
-                                defaultChecked
-                            />
-                        </Label>
-                        <Label>
-                            <FormattedMessage id='filter-event-fi'/>
-                            <Input
-                                name='radiogroup'
-                                type='radio'
-                                value='fi'
-                                onChange={this.toggleEventLanguages}
-
-                            />
-                        </Label>
-                        <Label>
-                            <FormattedMessage id='filter-event-sv'/>
-                            <Input
-                                name='radiogroup'
-                                type='radio'
-                                value='sv'
-                                onChange={this.toggleEventLanguages}
-                            />
-                        </Label>
-                        <Label>
-                            <FormattedMessage id='filter-event-en'/>
-                            <Input
-                                name='radiogroup'
-                                type='radio'
-                                value='en'
-                                onChange={this.toggleEventLanguages}
-                            />
-                        </Label>
-                    </div>
-                </div>
-                */}
                 <EventTable
                     events={events}
                     user={user}

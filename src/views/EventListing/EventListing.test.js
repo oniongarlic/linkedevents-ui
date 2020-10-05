@@ -131,7 +131,7 @@ describe('EventListing', () => {
         const instance = wrapper.instance();
 
         test('contains radio-inputs with correct props', () => {
-            const inputelement = wrapper.find('.user-events-filter').find(Input)
+            const inputelement = wrapper.find('.col-sm-12').find(Input)
             expect(inputelement).toHaveLength(4);
             inputelement.forEach((Input, index) => {
                 expect(Input.prop('value')).toBe(defaultProps.eventLanguages[index])
@@ -149,7 +149,7 @@ describe('EventListing', () => {
         })
 
         test('correct amount of FormattedMessages', ()=> {
-            expect(formattedelement).toHaveLength(8)
+            expect(formattedelement).toHaveLength(11)
         })
     })
 
