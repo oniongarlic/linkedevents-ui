@@ -36,6 +36,7 @@ class ImageEdit extends React.Component {
             thumbnailUrl: null,
             urlError: false,
             fileSizeError: false,
+            hideAltText: false,
         };
 
         this.getCloseButton = this.getCloseButton.bind(this);
@@ -43,6 +44,8 @@ class ImageEdit extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleLicenseChange = this.handleLicenseChange.bind(this);
         this.handleInputBlur = this.handleInputBlur.bind(this);
+        this.clearPictures = this.clearPictures.bind(this);
+        this.setAltDecoration = this.setAltDecoration.bind(this);
     }
 
     componentDidMount() {
@@ -124,12 +127,37 @@ class ImageEdit extends React.Component {
         const formData = new FormData(foo);
         console.log(formData.get('externalUrl'));
         const bar = formData.get('externalUrl');
-        this.setState({thumbnailUrl: bar});
-
+        this.setState({thumbnailUrl: bar, imageFile: null});
     }
 
     clickHiddenUpload() {
         this.hiddenFileInput.current.click();
+    }
+
+    /**
+     * Clears both picture states if user decides to use different picture
+     */
+    clearPictures() {
+        this.setState(({
+            imageFile: null,
+            thumbnailUrl: null,
+        }))
+    }
+
+    /**
+     * Handles setting decorative altText for picture and hiding inputs
+     * @param e 
+     */
+    setAltDecoration(e) {
+        const decoration = e.target.checked
+        const langs = this.props.editor.contentLanguages;
+        const DecorationAlts = {};
+        langs.forEach((lang)=> DecorationAlts[lang] = this.context.intl.formatMessage({id: `description-alt.${lang}`}));
+        this.handleChange({target: {id: 'altText'}},
+            DecorationAlts)
+        this.setState({
+            hideAltText: decoration,
+        })
     }
 
     /**
@@ -194,6 +222,21 @@ class ImageEdit extends React.Component {
         else {
             this.props.postImage(imageToPost,this.props.user, this.props.id);
         }
+        this.setState({
+            image: {
+                name: {},
+                altText: {},
+                photographerName: '',
+            },
+            license: 'event_only',
+            imagePermission: false,
+            edit: false,
+            imageFile: null,
+            thumbnailUrl: null,
+            urlError: false,
+            fileSizeError: false,
+            hideAltText: false,
+        })
         this.props.close();
     }
 
@@ -220,6 +263,7 @@ class ImageEdit extends React.Component {
             });
             this.setState({image: localImage})
         }
+
         else if (id.includes('name')) {
 
             localImage = update(localImage, {
@@ -254,19 +298,20 @@ class ImageEdit extends React.Component {
     getFields() {
         return (
             <React.Fragment>
-                <MultiLanguageField
-                    id='altText'
-                    multiLine
-                    required={true}
-                    defaultValue={this.state.image.altText}
-                    validations={[VALIDATION_RULES.MEDIUM_STRING]}
-                    label='alt-text'
-                    languages={this.props.editor.contentLanguages}
-                    maxLength={this.state.validation.altTextMaxLength}
-                    onChange={this.handleChange}
-                    onBlur={this.handleChange}
-                />
-
+                {!this.state.hideAltText &&
+                    <MultiLanguageField
+                        id='altText'
+                        multiLine
+                        required={true}
+                        defaultValue={this.state.image.altText}
+                        validations={[VALIDATION_RULES.MEDIUM_STRING]}
+                        label='alt-text'
+                        languages={this.props.editor.contentLanguages}
+                        maxLength={this.state.validation.altTextMaxLength}
+                        onChange={this.handleChange}
+                        onBlur={this.handleChange}
+                    />
+                }
                 <MultiLanguageField
                     id='name'
                     multiLine
@@ -370,6 +415,7 @@ class ImageEdit extends React.Component {
             <React.Fragment>
                 <Modal
                     className='image-edit-dialog'
+                    role='dialog'
                     size='xl'
                     isOpen={open}
                     toggle={close}
@@ -434,6 +480,34 @@ class ImageEdit extends React.Component {
                                                         <FormattedMessage id={errorMessage}>{txt => <p role="alert" className='image-error'>{txt}</p>}</FormattedMessage>
                                                     </React.Fragment>
                                                 )}
+                                                <div className='tools'>
+                                                    <Button
+                                                        onClick={this.clearPictures}
+                                                        variant='contained'
+                                                        color='primary'
+                                                        size='xl' block
+                                                    >
+                                                        <FormattedMessage id='uploaded-image-button-delete' />
+                                                    </Button>
+                                                    <div className='tip'>
+                                                        <p>
+                                                            <FormattedMessage id='uploaded-image-alt-tip'>{txt => txt}</FormattedMessage>
+                                                            <br/>
+                                                            <FormattedMessage id='uploaded-image-alt-tip2'>{txt => txt}</FormattedMessage>
+                                                        </p>
+                                                    </div>
+                                                    <Label>
+                                                        <Input
+                                                            addon
+                                                            id='hideAltText'
+                                                            name='decoration'
+                                                            type="checkbox"
+                                                            onChange={this.setAltDecoration}
+                                                        >
+                                                        </Input>
+                                                        <FormattedMessage id={'uploaded-image-alt-decoration'}/>
+                                                    </Label>
+                                                </div>
                                             </form>
                                         </div>
                                     </div>

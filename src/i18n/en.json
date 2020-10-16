@@ -369,7 +369,7 @@
     "image-modal-image-license-permission": "I have permission to use/send this image.",
     "image-modal-image-license-explanation-event-only": "Käyttö vain tapahtuman yhteydessä = Kuvaa saa käyttää ja jakaa vain tämän tapahtumatiedon yhteydessä.",
     "image-modal-image-license-explanation-cc-by": "CC BY 4.0 = Kuvaa saa jakaa ja käyttää vapaasti, kun tekijäntiedot mainitaan. Valitse aina, kun kuva on saatu tällä käyttöoikeudella. (ks. <a href='https://creativecommons.org/licenses/by/4.0/' target='_blank' rel='noopener noreferrer'>lisätietoja</a>).",
-    "image-modal-view-terms-paragraph-text": "Prior to uploading a new image, get to know the <a href='/help#images' target='_blank' rel='noopener noreferrer'>image terms and recommendations.</a>",
+    "image-modal-view-terms-paragraph-text": "Prior to uploading a new image, get to know the <a href='/help#images' target='_blank' rel='noopener noreferrer'>image terms and recommendations (opens in new tab).</a>",
     "image-modal-save-button-text": "Save image",
     "error-message-has-been-sent": "The error message has been sent. Thank you for reporting!",
     "invalid-date-format": "Invalid date format",

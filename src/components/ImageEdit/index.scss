@@ -1,4 +1,5 @@
 .image-edit-dialog {
+  
   &--image {
     object-fit: contain;
   }
@@ -89,6 +90,30 @@
     color: #dc3545;
 }
 
+  #upload-external {
+    input {
+      border-width: 0px 0px 2px 0px;
+      border-style: solid;
+    }
+    .image-url {
+      span {
+        text-align: center;
+      }
+      display: grid;
+    }
+    .tools {
+      label {
+        display: inline-flex;
+        margin-bottom: 0px;
+         input[type="checkbox"]::after {
+          border: 0;
+          width: 1em;
+          height: 1em;
+      }
+      }
+    }
+  }
+
 &--new {
   margin-bottom: 15px;
 }
@@ -104,22 +129,15 @@
   .btn {
     padding: 6px 6px;
     border-radius: 2px;
-    font-size: 15.75px;
+    font-size: 1rem;
     background-color: #0072c6;
-    max-width: 453px;
+
   }
   .btn-primary.disabled:hover {
     background-color: #6c757d;
   }
 }
-.button-row {
-  .btn {
-    padding: 16px 16px;
-    border-radius: 2px;
-    font-size: 15.75px;
-    background-color: #0072c6;
-  }
-}
+
 .disabled:disabled {
   background-color: #6c757d;
   border: none;

@@ -7,7 +7,7 @@ import {IntlProvider, FormattedMessage} from 'react-intl';
 import fiMessages from 'src/i18n/fi.json';
 import mapValues from 'lodash/mapValues';
 import {HelTextField, MultiLanguageField} from '../HelFormFields';
-import {Input} from 'reactstrap';
+import {Input, Button} from 'reactstrap';
 import constants from 'src/constants';
 import {mockImages, mockUser, mockEditorNewEvent} from '__mocks__/mockData';
 
@@ -358,15 +358,17 @@ describe('ImageEdit', () => {
                 const wrapper = getWrapper();
                 const elements = wrapper.find(Input);
 
-                expect(elements).toHaveLength(3);
+                expect(elements).toHaveLength(4);
                 expect(elements.at(0).prop('type')).toBe('checkbox');
-                expect(elements.at(1).prop('type')).toBe('radio');
+                expect(elements.at(1).prop('type')).toBe('checkbox');
                 expect(elements.at(2).prop('type')).toBe('radio');
-                expect(elements.at(0).prop('name')).toBe('permission');
-                expect(elements.at(1).prop('name')).toBe('license_type');
+                expect(elements.at(3).prop('type')).toBe('radio');
+                expect(elements.at(0).prop('name')).toBe('decoration');
+                expect(elements.at(1).prop('name')).toBe('permission');
                 expect(elements.at(2).prop('name')).toBe('license_type');
-                expect(elements.at(1).prop('value')).toBe('event_only');
-                expect(elements.at(2).prop('value')).toBe('cc_by');
+                expect(elements.at(3).prop('name')).toBe('license_type');
+                expect(elements.at(2).prop('value')).toBe('event_only');
+                expect(elements.at(3).prop('value')).toBe('cc_by');
             });
             test('two input components for uploading file via url or hard disk', () => {
                 const wrapper = getWrapper();
@@ -375,7 +377,38 @@ describe('ImageEdit', () => {
                 expect(elements.at(0).prop('type')).toBe('file');
                 expect(elements.at(1).prop('name')).toBe('externalUrl');
             })
+        })
+        describe('State clearing and decoration', () => {
 
+            test('Clearing pictures from states, button', () =>{
+                const wrapper = getWrapper();
+                const instance = wrapper.instance()
+                wrapper.setState({imageFile: defaultImageFile});
+                wrapper.setState({thumbnailUrl: defaultProps.thumbnailUrl});
+
+                const button = wrapper.find(Button).at(2)
+                expect(button.prop('onClick')).toBe(instance.clearPictures)
+                button.simulate('click')
+                expect(wrapper.state('imageFile')).toBe(null);
+                expect(wrapper.state('thumbnailUrl')).toBe(null);
+            })
+
+            test('altText decoration to input-value and hideAltText-state to hide inputs', () => {
+                const wrapper = getWrapper();
+                const instance = wrapper.instance()
+                const checked = (bool) => ({target: {checked: bool}});
+
+                expect(wrapper.state('hideAltText')).toBe(false);
+                instance.setAltDecoration(checked(true));
+                expect(wrapper.state('hideAltText')).toBe(true);
+
+                instance.setAltDecoration({target:{id:'altText'}},{fi: 'Kuva on koriste'});
+                const element = wrapper.find(MultiLanguageField).at(0);
+                expect(element.prop('defaultValue')).toEqual({fi: 'Kuva on koriste'});
+            })
+            test('states cleared after submitted image', () => {
+
+            })
 
         })
 
