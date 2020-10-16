@@ -170,6 +170,47 @@ describe('ImageEdit', () => {
 
                 });
 
+                test('expect states to be default after postImage', async () => {
+                    const wrapper = getWrapper({postImage, close, imageFile});
+                    wrapper.setState({imageFile: imageFile});
+                    jest.spyOn(wrapper.instance(),'imageToBase64');
+                    wrapper.instance().handleChange({target:{id:'altText'}}, {fi:'finnishAlt'});
+                    wrapper.instance().handleChange({target:{id:'name'}}, {fi:'finnishName'});
+                    wrapper.instance().handleChange({target:{id:'photographerName'}}, 'Photographer Phil');
+                    const expectedImage = await wrapper.instance().imageToBase64(defaultImageBlob);
+                    await wrapper.instance().handleImagePost();
+
+                    const imageToPost = {
+                        alt_text: {
+                            fi: 'finnishAlt',
+                        },
+                        name: {
+                            fi: 'finnishName',
+                        },
+                        file_name: 'testfile',
+                        image: expectedImage,
+                        license: 'event_only',
+                        photographer_name: 'Photographer Phil',
+                    };
+
+                    expect(wrapper.instance().imageToBase64).toHaveBeenCalled();
+                    expect(postImage).toHaveBeenCalledWith(imageToPost,defaultUser,null)
+
+                    expect(wrapper.state('imageFile')).toBe(null);
+                    expect(wrapper.state('thumbnailUrl')).toBe(null);
+                    expect(wrapper.state('image')['altText']).toEqual({});
+                    expect(wrapper.state('image')['name']).toEqual({});
+                    expect(wrapper.state('image')['photographerName']).toEqual('');
+                    expect(wrapper.state('license')).toEqual('event_only');
+                    expect(wrapper.state('imagePermission')).toBe(false);
+                    expect(wrapper.state('urlError')).toBe(false);
+                    expect(wrapper.state('fileSizeError')).toBe(false);
+                    expect(wrapper.state('hideAltText')).toBe(false);
+
+                    expect(close).toHaveBeenCalled();
+
+                });
+
                 test('calls postImage with correct props when updateExisting', async () => {
                     const wrapper = getWrapper(
                         {
@@ -378,38 +419,30 @@ describe('ImageEdit', () => {
                 expect(elements.at(1).prop('name')).toBe('externalUrl');
             })
         })
-        describe('State clearing and decoration', () => {
 
-            test('Clearing pictures from states, button', () =>{
-                const wrapper = getWrapper();
-                const instance = wrapper.instance()
+        describe('State clearing and decoration', () => {
+            const wrapper = getWrapper();
+            const instance = wrapper.instance()
+            const button = wrapper.find(Button).at(2)
+            test('clear button sets correct state', () =>{
                 wrapper.setState({imageFile: defaultImageFile});
                 wrapper.setState({thumbnailUrl: defaultProps.thumbnailUrl});
-
-                const button = wrapper.find(Button).at(2)
                 expect(button.prop('onClick')).toBe(instance.clearPictures)
                 button.simulate('click')
                 expect(wrapper.state('imageFile')).toBe(null);
                 expect(wrapper.state('thumbnailUrl')).toBe(null);
             })
-
-            test('altText decoration to input-value and hideAltText-state to hide inputs', () => {
-                const wrapper = getWrapper();
-                const instance = wrapper.instance()
+            test('set hideAltText-state when setAltDecoration is called', () => {
                 const checked = (bool) => ({target: {checked: bool}});
-
                 expect(wrapper.state('hideAltText')).toBe(false);
                 instance.setAltDecoration(checked(true));
                 expect(wrapper.state('hideAltText')).toBe(true);
-
+            })
+            test('calling setAltDecoration with altText to set input-value', () => {
                 instance.setAltDecoration({target:{id:'altText'}},{fi: 'Kuva on koriste'});
                 const element = wrapper.find(MultiLanguageField).at(0);
                 expect(element.prop('defaultValue')).toEqual({fi: 'Kuva on koriste'});
             })
-            test('states cleared after submitted image', () => {
-
-            })
-
         })
 
 
