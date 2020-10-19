@@ -430,6 +430,8 @@ class ImageEdit extends React.Component {
                                 <div className='file-upload'>
                                     <div className='tip'>
                                         <p>
+                                            <FormattedMessage id='uploaded-image-event-tip'>{txt => txt}</FormattedMessage>
+                                            <br/>
                                             <FormattedMessage id='uploaded-image-size-tip'>{txt => txt}</FormattedMessage>
                                             <br/>
                                             <FormattedMessage id='uploaded-image-size-tip2'>{txt => txt}</FormattedMessage>
@@ -466,6 +468,11 @@ class ImageEdit extends React.Component {
 
                                                     />
                                                 </label>
+                                                {(this.state.fileSizeError || this.state.urlError) && (
+                                                    <React.Fragment>
+                                                        <FormattedMessage id={errorMessage}>{txt => <p role="alert" className='image-error'>{txt}</p>}</FormattedMessage>
+                                                    </React.Fragment>
+                                                )}
                                                 <Button
                                                     size='xl' block
                                                     className='file-upload--external-button'
@@ -475,11 +482,6 @@ class ImageEdit extends React.Component {
                                                 >
                                                     <FormattedMessage id='upload-image-from-url-button' />
                                                 </Button>
-                                                {(this.state.fileSizeError || this.state.urlError) && (
-                                                    <React.Fragment>
-                                                        <FormattedMessage id={errorMessage}>{txt => <p role="alert" className='image-error'>{txt}</p>}</FormattedMessage>
-                                                    </React.Fragment>
-                                                )}
                                                 <div className='tools'>
                                                     <Button
                                                         onClick={this.clearPictures}

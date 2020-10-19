@@ -343,6 +343,7 @@
     "format-select-count": " ({count} st händelser)",
     "upload-image-from-url": "Tai syötä ulkoisen kuvan osoite (url)",
     "uploaded-image-size-error": "Kuva on liian suuri. Kuvan koon on oltava alle 2 Mt.",
+    "uploaded-image-event-tip": "The image you added to the event can also be found in your image bank",
     "image-modal-image-info": "Kuvan tiedot",
     "alt-text": "Alt-teksti eli kuvan sisällön sanallinen kuvaus (pituus vähintään 6 merkkiä)",
     "photographer": "Kuvaaja",
