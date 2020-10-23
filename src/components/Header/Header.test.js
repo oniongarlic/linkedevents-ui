@@ -141,9 +141,9 @@ describe('components/Header/index', () => {
                 test('NavLink is active based on location.pathname prop',() => {
                     const element = getWrapper({location:{pathname:'/'}});
                     let navLinks = element.find(NavLink);
-                    expect(navLinks.at(0).prop('active')).toBe(true);
+                    expect(navLinks.at(0).prop('active')).toBe(false);
                     expect(navLinks.at(1).prop('active')).toBe(false);
-                    expect(navLinks.at(2).prop('active')).toBe(false);
+                    expect(navLinks.at(2).prop('active')).toBe(true);
                     expect(navLinks.at(3).prop('active')).toBe(false);
                     element.setProps({location:{pathname:'/search'}});
                     navLinks = element.find(NavLink);
@@ -155,8 +155,8 @@ describe('components/Header/index', () => {
                     navLinks = element.find(NavLink);
                     expect(navLinks.at(0).prop('active')).toBe(false);
                     expect(navLinks.at(1).prop('active')).toBe(false);
-                    expect(navLinks.at(2).prop('active')).toBe(true);
-                    expect(navLinks.at(3).prop('active')).toBe(false);
+                    expect(navLinks.at(2).prop('active')).toBe(false);
+                    expect(navLinks.at(3).prop('active')).toBe(true);
                 });
             });
         });

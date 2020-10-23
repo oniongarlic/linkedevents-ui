@@ -146,22 +146,16 @@ class HeaderBar extends React.Component {
                 </Navbar>
 
                 <Navbar role='navigation' className='linked-events-bar' expand='xl'>
-                    <NavbarBrand
-                        href='#'
-                        className='linked-events-bar__logo'
-                        onClick={this.onLinkToMainPage}
-                        aria-label={this.context.intl.formatMessage({id: `linked-${appSettings.ui_mode}`})}>
-                        <FormattedMessage id={`linked-${appSettings.ui_mode}`} />
-                    </NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <ul className='linked-events-bar__links'>
                             <NavItem>
                                 <NavLink
-                                    active={this.isActivePath('/')}
+                                    active={this.isActivePath('/event/create/new')}
                                     href='#'
-                                    onClick={() => this.handleOnClick('/')}>
-                                    <FormattedMessage id={`${appSettings.ui_mode}-management`} />
+                                    onClick={() => this.handleOnClick('/event/create/new')}>
+                                    <span aria-hidden className='glyphicon glyphicon-plus' />
+                                    <FormattedMessage id={`create-${appSettings.ui_mode}`} />
                                 </NavLink>
                             </NavItem>
                             <NavItem>
@@ -169,16 +163,17 @@ class HeaderBar extends React.Component {
                                     active={this.isActivePath('/search')}
                                     href='#'
                                     onClick={() => this.handleOnClick('/search')}>
+                                    <span aria-hidden className='glyphicon glyphicon-search' />
                                     <FormattedMessage id={`search-${appSettings.ui_mode}`} />
                                 </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink
-                                    active={this.isActivePath('/help')}
+                                    active={this.isActivePath('/')}
                                     href='#'
-                                    onClick={() => this.handleOnClick('/help')}>
-                                    {' '}
-                                    <FormattedMessage id='more-info' />
+                                    onClick={() => this.handleOnClick('/')}>
+                                    <span aria-hidden className='glyphicon glyphicon-wrench' />
+                                    <FormattedMessage id={`${appSettings.ui_mode}-management`} />
                                 </NavLink>
                             </NavItem>
                             {showModerationLink && (
@@ -188,18 +183,18 @@ class HeaderBar extends React.Component {
                                         href='#'
                                         className='moderator'
                                         onClick={() => this.handleOnClick('/moderation')}>
+                                        <span aria-hidden className='glyphicon glyphicon-cog' />
                                         <FormattedMessage id='moderation-page' />
                                     </NavLink>
                                 </NavItem>
                             )}
-                            <NavItem className='ml-auto'>
+                            <NavItem>
                                 <NavLink
-                                    active={this.isActivePath('/event/create/new')}
+                                    active={this.isActivePath('/help')}
                                     href='#'
-                                    className='create-events-button'
-                                    onClick={() => this.handleOnClick('/event/create/new')}>
-                                    <span aria-hidden className='glyphicon glyphicon-plus'></span>
-                                    <FormattedMessage id={`create-${appSettings.ui_mode}`} />
+                                    onClick={() => this.handleOnClick('/help')}>
+                                    <span aria-hidden className='glyphicon glyphicon-question-sign' />
+                                    <FormattedMessage id='more-info' />
                                 </NavLink>
                             </NavItem>
                         </ul>

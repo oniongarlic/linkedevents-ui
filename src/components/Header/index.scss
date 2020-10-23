@@ -97,18 +97,9 @@ $iconMarginLeft: 24px;
 		width: 100%;
 		background: $hel-white;
 		z-index: 1;
-		&__logo {
-			padding-right: $logoPaddingRight;
-			cursor: pointer;
-			span {
-				font-size: $linkedEventsTextSize;
-				font-weight: bold;
-				color: $hel-theme;
-			}
-		}
-		&__icon {
-			margin-left: $iconMarginLeft;
-			height: 100%;
+		border-bottom: rgba($color: #404040, $alpha: 0.75) 2px solid !important;
+		.glyphicon {
+			margin-right: 1vh;
 		}
 		&__links {
 			display: contents;
