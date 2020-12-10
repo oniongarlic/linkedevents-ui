@@ -332,6 +332,9 @@
     "editor-tip-event-languages": "Kielet, joita tapahtumassa käytetään.",
     "editor-tip-umbrella-sub-event": "Jos haluat lisätä tämän tapahtuman osaksi kattotapahtumaa, tee se ",
     "editor-tip-umbrella-sub-event-link": "sarjan ylätapahtumasta",
+    "editor-tip-umbrella-selection": "Jos kyseessä on itsenäinen tapahtuma, jätä valinnat tyhjiksi.",
+    "editor-tip-umbrella-selection1": "Jos tämä tapahtuma kokoaa alleen useita muita tapahtumia, valitse 'Tämä tapahtuma on kattotapahtuma'. Esimerkiksi Taiteiden yö tai Elokuvapäivä.",
+    "editor-tip-umbrella-selection2": "Jos tämä tapahtuma liittyy suoraan isompaan tapahtumaan, valitse 'Tällä tapahtumalla on kattotapahtuma' ja valitse aiemmin luotu tapahtuma. Esim. Kirjailijatapaaminen Taiteiden yönä.",
     "editor-tip-formlanguages": "Valitse tapahtuman syöttökielet. Jokaisella tapahtumalla on vähintään yksi kieli. Monikielisille tapahtumille suosittelemme syöttämään tiedot usealla kielellä.",
     "editor-tip-namedescription": "Kirjoita eri yhteyksissä ymmärrettävä otsikko sekä lyhyt kuvaus tapahtumasta. Voit myös syöttää valinnaisen pidemmän kuvauksen.",
     "editor-tip-namedescription2": "Lyhyt kuvaus näytetään vain tapahtumalistoissa. Jos kohderyhmä on rajattu, kerro siitä pidemmässä kuvaustekstissä.",
@@ -459,9 +462,6 @@
 	"table-pagination-next-page": "Seuraava sivu",
     "table-pagination-previous-page": "Edellinen sivu",
 
-    "editor-tip-umbrella-selection": "Kattotapahtuma valinnalla teet tapahtumaa, jonka alla on mahdollisesti muita tapahtumia. Esim. festivaali jonka alla festivaalin eri esitykset.",
-    "editor-tip-umbrella-selection1": "Jos tapahtuma on toisen tapahtuman alitapahtuma, valitse 'Tällä tapahtumalla on kattotapahtuma'.",
-    "editor-tip-umbrella-selection2": " ",
     "editor-tip-event-description": "Kirjoita eri yhteyksissä ymmärrettävä otsikko, lyhyt kuvaus ja kuvaus.",
     "editor-tip-event-description1": "Lyhyt kuvaus näytetään vain listoissa, kuvaus vain tapahtuman omalla sivulla. Jos kohderyhmä on rajattu, kerro siitä kuvaustekstissä.",
 
