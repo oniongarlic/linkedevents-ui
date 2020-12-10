@@ -108,7 +108,7 @@
     "new-image":  "Lägg till ny bild",
     "upload-image":  "Ladda upp lokal bild",
     "choose-image": "Lägg en bild till evenemanget eller välj en från bildbanken",
-    "use-external-image-url": "tai syötä ulkoisen kuvan osoite:",
+    "use-external-image-url": "eller ange URL till extern bild:",
     "upload-image-from-url-button": "Ladda upp från webbadress",
     "upload-image-select-bank": "Välj från bildbanken",
     "thumbnail-picture-edit": "Redigera den här bilden",
@@ -189,9 +189,9 @@
     "event-keywords-delete": "Radera ämnesord",
 
     "event-umbrella": "Paraplyevenemang",
-    "event-is-umbrella": "Det här evenemanget är en paraplyevenemang.",
+    "event-is-umbrella": "Det här evenemanget är ett paraplyevenemang.",
     "event-has-umbrella": "Det här evenemanget har ett paraplyevenemang.",
-    "event-is-umbrella-tooltip": "Ett evenemang under paraplyn kan inte vara ett paraplyevenemang.",
+    "event-is-umbrella-tooltip": "Ett evenemang under paraplyevenemanget kan inte vara ett paraplyevenemang.",
     "event-has-umbrella-tooltip": "Ett paraplyevenemang kan inte ha ett paraplyevenemang",
     "event-has-umbrella-select-tip": "Obs. Ett paraplyevenemang måste skapas före du kan lägga till evenemang under det",
 
@@ -281,13 +281,13 @@
     "search-date-label-end": "Till och med (dd.mm.åååå)",
     "date-picker-button-label": "Datumplockare",
     "copy-location-to-clipboard": "Kopiera plats-ID till urklipp",
-    "copy-to-clipboard": "Kopiera på klippbordet",
+    "copy-to-clipboard": "Kopiera till urklipp",
 
     "hel-target-groups": "Målgrupper",
     "additional-keywords": "Andra ämnesord",
     "main-categories": "Huvudkategorier",
 
-    "editor-publish-draft-warning": "OBS. Denna funktion publicerar evenemanget i Internetet. Evenemangsförslagets ursprungliga skapare kan inte mera redigera evenemanget.",
+    "editor-publish-draft-warning": "OBS. Denna funktion publicerar evenemanget på Internet. Evenemangsförslagets ursprungliga skapare kan inte mera redigera evenemanget.",
     "editor-publish-draft-extra-warning": "Följande evenemang publiceras:",
 
     "editor-update-warning": "Uppgifterna sparas i alla evenemang i denna serie. Förändringarna gjorda i dessa evenemang förloras. Är du säker att du vill fortsätta?",
@@ -298,7 +298,7 @@
     "editor-update-draft-extra-warning": "Uppgifterna sparas i följande evenemang:",
     "editor-update-draft-draft-extra-warning": "Uppgifterna sparas i följande evenemang:",
 
-    "editor-cancel-warning": "VARNING: Denna funktion inställer evenemanget.  Du kan också skjuta upp evenemanget till framtiden eller stryka en sådan evenemang som du matade in i misstag.",
+    "editor-cancel-warning": "VARNING: Denna funktion inställer evenemanget. Du kan också skjuta upp evenemanget till framtiden eller stryka en sådan evenemang som du matade in i misstag.",
     "editor-cancel-extra-warning": "Följande evenemang stryks:",
 
     "editor-postpone-warning": "VARNING: Denna funktion förskjuter evenemanget i framtiden. Du kan mata en ny tidpunkt för evenemanget när du har förskjutit det.",
@@ -371,7 +371,7 @@
     "format-select-count": " ({count} evenemang)",
     "upload-image-from-url": "Eller mata in adressen (url) av en extern bild",
     "uploaded-image-size-error": "Bilden är för stor. Bildens storlek måste vara under 2 Mt.",
-    "uploaded-image-event-tip": "The image you added to the event can also be found in your image bank",
+    "uploaded-image-event-tip": "Bilden du lade till evenemanget finns också i din bildbank",
     "image-modal-image-info": "Bildens uppgifter",
     "alt-text": "Alt-text eller en verbal beskrivning av bildens innehåll (minst 6 tecken)",
     "photographer": "Fotograf / rättighetshavare",
@@ -400,7 +400,7 @@
     "navbar.sv": "Svenska",
     "navbar.active": "Språket i bruk är Svenska",
 
-    "skiplink-shortcut": "Så till innehållet",
+    "skiplink-shortcut": "Gå till innehållet",
 
 	"cookieBar.accept": "Acceptera alla cookies",
 	"cookieBar.decline.text": "Acceptera endast funktionella cookies",
@@ -433,7 +433,7 @@
 	"table-pagination-shortcut-link": "Gå till början av tabellen",
 	"table-pagination-next-page": "Nästa sida",
     "table-pagination-previous-page": "Föregående sida",
-    
+
     "close-report-modal": "Stäng rapporteringsdialogen",
     "close-recurring-modal": "Stäng dialogrutan för återkommande händelser",
     "close-preview-modal": "Stäng förhandsvisning",
