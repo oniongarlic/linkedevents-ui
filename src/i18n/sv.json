@@ -180,9 +180,9 @@
     "event-video-add": "Lägg till en ny video",
 
     "event-social-media-fields-header": "Evenemangskanaler",
-    "facebook-url": "Facebook (url)",
-    "twitter-url": "Twitter (url)",
-    "instagram-url": "Instagram (url)",
+    "facebook-url": "Facebook (URL)",
+    "twitter-url": "Twitter (URL)",
+    "instagram-url": "Instagram (URL)",
 
     "event-categorization": "Kategorisering av evenemanget",
     "event-keywords": "Lägg till övriga ämnesord",
@@ -369,7 +369,7 @@
     "return-to-events": "Återvänd till evenemangen",
 
     "format-select-count": " ({count} evenemang)",
-    "upload-image-from-url": "Eller mata in adressen (url) av en extern bild",
+    "upload-image-from-url": "Eller mata in adressen (URL) av en extern bild",
     "uploaded-image-size-error": "Bilden är för stor. Bildens storlek måste vara under 2 Mt.",
     "uploaded-image-event-tip": "Bilden du lade till evenemanget finns också i din bildbank",
     "image-modal-image-info": "Bildens uppgifter",

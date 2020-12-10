@@ -169,9 +169,9 @@
     "event-video-add": "Add new video",
 
     "event-social-media-fields-header": "Event in social media",
-    "facebook-url": "Facebook (url)",
-    "twitter-url": "Twitter (url)",
-    "instagram-url": "Instagram (url)",
+    "facebook-url": "Facebook (URL)",
+    "twitter-url": "Twitter (URL)",
+    "instagram-url": "Instagram (URL)",
 
     "event-categorization": "Categorization",
     "event-keywords": "Add other keywords",
@@ -351,10 +351,10 @@
     "return-to-events": "Return back to events",
 
     "format-select-count": " ({count} events)",
-    "upload-image-from-url": "Upload image from url",
+    "upload-image-from-url": "Upload image from URL",
     "uploaded-image-size-error": "The allowed maximum size for uploaded images is 2 megabytes (MB).",
     "image-modal-image-info": "Image information",
-    "upload-image-from-url-button": "Upload from url",
+    "upload-image-from-url-button": "Upload from URL",
     "upload-image-select-bank": "Select from the image bank",
     "uploaded-image-event-tip": "The image you added to the event can also be found in your image bank",
     "upload-new-image": "Add image",
