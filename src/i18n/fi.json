@@ -184,7 +184,7 @@
     "event-video-alt_text": "Alt-teksti",
     "event-video-add": "Lisää uusi video",
 
-    "event-social-media-fields-header": "Tapahtuma sosiaalisessa mediassa",
+    "event-social-media-fields-header": "Tapahtuman kanavat",
     "facebook-url": "Facebook (URL)",
     "twitter-url": "Twitter (URL)",
     "instagram-url": "Instagram (URL)",
@@ -314,8 +314,10 @@
     "editor-sentinel-alert": "Voit katsella lomaketta, mutta sinulla ei ole oikeuksia julkaista tai muokata tapahtumia. Et ole kirjautunut sisään tai kirjautumisesi on vanhentunut.",
     "editor-authorization-required": "Jos haluat julkaista tapahtuman, kirjaudu ensin sisään.",
 
+    "editor-tip-time-start": "Kirjoita tapahtuman alkamispäivä ja alkamisaika.",
     "editor-tip-time-start-end": "Kirjoita tapahtuman alkua ja loppua varten päivämäärät ja kellonajat.",
-    "editor-tip-time-multi": "Jos tapahtuma järjestetään useamman kerran, voit lisätä tapahtumalle uusia ajankohtia. Jos tapahtuma toistuu säännöllisesti, voit lisätä kaikki ajankohdat kerralla valitsemalla \"Toistuva tapahtuma\". Tapahtumakertoja voi olla enintään 65.",
+    "editor-tip-time-end": " Kirjoita päättymispäivä ja päättymisaika, jos tiedossa. Jos päättymisaikaa ei ole annettu, tulee päättymisajaksi alkamispäivä klo 23.59.",
+    "editor-tip-time-multi": "Jos tapahtuma järjestetään useamman kerran, voit lisätä tapahtumalle uusia ajankohtia. Jos tapahtuma toistuu säännöllisesti, voit lisätä kaikki ajankohdat kerralla valitsemalla 'Toistuva tapahtuma'. Tapahtumakertoja voi olla enintään 65.",
     "editor-tip-time-delete": "Ylimääräisen ajankohdan voit poistaa valitsemalla ajankohdan vieressä olevan roskakorisymbolin.",
     "editor-tip-location": "Kirjoita kenttään tapahtumapaikan nimi tai katuosoite ja valitse oikea paikka listasta.",
     "editor-tip-location-internet": "Jos tapahtuma järjestetään vain etänä internetissä, valitse tapahtumapaikaksi Virtuaalitapahtuma. Tapahtuman URL-osoite laitetaan kotisivu-kenttään ja/tai tapahtuma sosiaalisessa mediassa -kenttiin.",
@@ -402,7 +404,7 @@
     "thumbnail-picture-delete": "Poista tämä kuva järjestelmästä",
 
     "alt-text": "Alt-teksti eli kuvan sisällön sanallinen kuvaus (pituus vähintään 6 merkkiä)",
-    "photographer": "Kuvaaja",
+    "photographer": "Kuvaaja / kuvan oikeudenomistaja",
     "image-modal-license-restricted-to-event": "Käyttö rajattu tapahtuman yhteyteen",
     "image-modal-image-license": "Lisenssi",
     "image-modal-image-license-permission": "Minulla on oikeus lähettää kuva.",
@@ -451,7 +453,7 @@
     "reportmodal-button": "Raportoi virhetilanteesta",
     "reportmodal-field": "Kuvaile ongelmaa",
     "reportmodal-version": "Sovelluksen versiotunniste:",
-    "reportmodal-tooltip": "Jos tapahtumien hallinnassa tai syöttölomakkeen toiminnassa on virhe, klikkaa tästä raportoidaksesi virheestä, niin saamme virhetilanteesta tiedon ja voimme tutkia asiaa.",
+    "reportmodal-tooltip": "Jos tapahtumien hallinnassa tai syöttölomakkeen toiminnassa on virhe, täytä kuvaus virhetilanteesta, niin saamme tiedon ja voimme tutkia asiaa.",
     "reportmodal-sent": "Raportti lähetetty, kiitoksia",
     "reportmodal-debugbutton": "Palaute",
 
