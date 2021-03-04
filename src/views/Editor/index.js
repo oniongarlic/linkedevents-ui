@@ -22,7 +22,7 @@ import {confirmAction, clearFlashMsg as clearFlashMsgAction, setFlashMsg as setF
 import constants from '../../constants'
 import FormFields from '../../components/FormFields/'
 import {EventQueryParams, fetchEvent} from '../../utils/events'
-import {push} from 'react-router-redux'
+import {push} from 'connected-react-router'
 import moment from 'moment'
 import {
     getOrganizationAncestors,

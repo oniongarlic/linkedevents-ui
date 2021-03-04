@@ -8,7 +8,7 @@ import {Button} from 'reactstrap';
 import {Helmet} from 'react-helmet';
 //Replaced Material-ui Spinner for a Bootstrap implementation. - Turku
 import Spinner from 'react-bootstrap/Spinner'
-import {push} from 'react-router-redux'
+import {push} from 'connected-react-router'
 import {replaceData as replaceDataAction} from 'src/actions/editor.js'
 import {confirmAction} from 'src/actions/app.js'
 import {getStringWithLocale} from 'src/utils/locale'
