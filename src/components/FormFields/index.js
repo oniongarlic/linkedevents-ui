@@ -17,8 +17,8 @@ import {
 import RecurringEvent from 'src/components/RecurringEvent'
 import {Button, Form, FormGroup, Collapse, UncontrolledCollapse} from 'reactstrap';
 import {mapKeywordSetToForm, mapLanguagesSetToForm} from '../../utils/apiDataMapping'
-import {setEventData, setData} from '../../actions/editor'
-import {get, isNull, pickBy} from 'lodash'
+import {setEventData, setData, clearValue} from '../../actions/editor'
+import {get, isNull, isString, pickBy} from 'lodash'
 import API from '../../api'
 import CONSTANTS from '../../constants'
 import OrganizationSelector from '../HelFormFields/OrganizationSelector';
@@ -69,6 +69,7 @@ class FormFields extends React.Component {
         super(props);
 
         this.state = {
+            selectEventType: '',
             showNewEvents: true,
             showRecurringEvent: false,
             mapContainer: null,
@@ -111,6 +112,10 @@ class FormFields extends React.Component {
         if ((Object.keys(prevProps.editor.validationErrors).length === 0) && (Object.keys(this.props.editor.validationErrors).length > 0)) {
             this.setState({headerPrices: true, headerSocials: true, headerCategories: true, headerInlanguage: true, headerDescription: true, headerImage: true});
         }
+        if (prevState.selectEventType === 'recurring' && Object.keys(this.props.editor.values.sub_events).length === 0) {
+            this.toggleEventType({target: {value: 'single'}})
+        }
+
     }
 
     handleSetMapContainer = (mapContainer) => {
@@ -159,16 +164,21 @@ class FormFields extends React.Component {
         }
     }
 
-    addNewEventDialog() {
+    addNewEventDialog(recurring = false) {
         let subEventKeys = Object.keys(this.props.editor.values.sub_events)
         let key = subEventKeys.length > 0 ? Math.max.apply(null, subEventKeys) + 1 : 1
-        const newEventObject = {[key]: {}}
+        const newEventObject = {[key]: {start_time: undefined}}
         this.context.dispatch(setEventData(newEventObject, key))
+        if (recurring) {
+            const newObj = {[key + 1]: {start_time: undefined}}
+            this.context.dispatch(setEventData(newObj, key + 1))
+        }
     }
 
     generateNewEventFields(events) {
         const {validationErrors} = this.props.editor;
-        const subEventErrors = validationErrors.sub_events || {}
+        const subLengthError = Object.assign({}, validationErrors.sub_length);
+        const subEventErrors = {...validationErrors.sub_events, ...subLengthError} || {}
 
         let newEvents = []
         const keys = Object.keys(events)
@@ -178,18 +188,20 @@ class FormFields extends React.Component {
             if (events.hasOwnProperty(key)) {
                 newEvents.push(
                     <NewEvent
+                        length={newEvents.length + 1}
                         key={key}
                         eventKey={key}
                         event={events[key]}
                         errors={subEventErrors[key] || {}}
                         setInitialFocus={key === lastKey ? true : false}
+                        subError={this.props.editor.validationErrors}
                     />
                 )
             }
         }
 
         return newEvents
-    }
+    }    
 
     trimmedDescription() {
         let descriptions = Object.assign({}, this.props.editor.values['description'])
@@ -216,6 +228,39 @@ class FormFields extends React.Component {
         }
     }
 
+    /**
+     *  Change event type between single & recurring ->
+     *  Depending on @params event, determine do we show start_time & end_time
+     *  or sub_event related values
+     */
+    toggleEventType = (event) => {
+        const type = event.target.value === 'single' ? '' : event.target.value;
+        if (event.target.value === 'single') {
+            this.context.dispatch(setData({sub_events: {}}))
+        } else if (event.target.value === 'recurring' && !this.state.selectEventType) {
+            this.context.dispatch(clearValue(['start_time', 'end_time']))
+            this.addNewEventDialog(true)
+        }
+        this.setState({selectEventType: type});
+    }
+    
+    /**
+    * Check that sub_events has property 'start_time' & it's not undefined
+    * @param sub_events value
+    * @returns boolean
+    */
+    subEventsContainTime(sub_events) {
+        let found = false;
+        if (Object.keys(sub_events).length > 0) {
+            for(const key in sub_events) {
+                if (sub_events[key].hasOwnProperty('start_time') && sub_events[key].start_time !== undefined) {
+                    found = true;
+                }
+            }
+        }
+        return found;
+    }
+
     render() {
         // Changed keywordSets to be compatible with Turku's backend.
         const currentLocale = this.state.availableLocales.includes(this.context.intl.locale) ? this.context.intl.locale : 'fi';
@@ -235,13 +280,13 @@ class FormFields extends React.Component {
         const organizationData = get(user, `${userType}OrganizationData`, {})
         const publisherOptions = Object.keys(organizationData)
             .map(id => ({label: organizationData[id].name, value: id}))
-
+        const subTimeDisable = this.subEventsContainTime(values['sub_events'])
         const selectedPublisher = publisherOptions.find(option => option.value === values['organization']) || {};
-
         const position = this.props.editor.values.location ? this.props.editor.values.location.position : null;
         const headerTextId = formType === 'update'
             ? 'edit-events'
             : 'create-events'
+            
         return (
             <div className='mainwrapper'>
                 {!this.props.user &&
@@ -420,11 +465,60 @@ class FormFields extends React.Component {
                 <div className='row date-row'>
                     <SideField label={this.context.intl.formatMessage({id: 'event-datetime-fields-header-help'})}>
                         <p><FormattedMessage id="editor-tip-time-start-end"/></p>
-                        <p><FormattedMessage id="editor-tip-time-multi"/></p>
+                        <p><FormattedMessage id="editor-tip-time-type"/></p>
+                        <p><FormattedMessage id="editor-tip-time-extended"/></p>
                         <p><FormattedMessage id="editor-tip-time-delete"/></p>
                     </SideField>
                     <div className='col-sm-6'>
-                        <div className='row'>
+                        <div className='row radio-row'>
+                            <div className='custom-control custom-radio'>
+                                <input
+                                    className='custom-control-input'
+                                    id='single'
+                                    name='radiogroup'
+                                    type='radio'
+                                    value='single'
+                                    onChange={this.toggleEventType}
+                                    checked={!this.state.selectEventType}
+                                    disabled={
+                                        formType === 'update' ||
+                                        formType === 'add' ||
+                                        isSuperEventDisable ||
+                                        isSuperEvent ||
+                                        subTimeDisable}
+                                />
+                                <label className='custom-control-label' htmlFor='single'>
+                                    <FormattedMessage id='event-type-single'/>
+                                </label>
+                            </div>
+                            <div className='custom-control custom-radio'>
+                                <input
+                                    className='custom-control-input'
+                                    id='recurring'
+                                    name='radiogroup'
+                                    type='radio'
+                                    value='recurring'
+                                    checked={this.state.selectEventType}
+                                    onChange={this.toggleEventType}
+                                    disabled={formType === 'update' || 
+                                    formType === 'add' || 
+                                    isSuperEventDisable || 
+                                    isSuperEvent ||
+                                    values.start_time !== undefined}
+                                />
+                                <label className='custom-control-label' htmlFor='recurring'>
+                                    <FormattedMessage id='event-type-recurring'/>
+                                </label>
+                            </div>
+                            { !['update', 'add'].includes(formType) && (subTimeDisable || values.start_time !== undefined) ?
+                                <div className='typetip'>
+                                    <FormattedMessage id="editor-tip-eventtype-disable"/>
+                                </div>
+                                : null
+                            }
+                        </div>
+                        {!this.state.selectEventType
+                            ?
                             <div className='col-xs-12 col-sm-12'>
                                 <CustomDateTime
                                     id="start_time"
@@ -452,50 +546,55 @@ class FormFields extends React.Component {
                                     required={true}
                                 />
                             </div>
-                        </div>
-                        <div className={'new-events ' + (this.state.showNewEvents ? 'show' : 'hidden')}>
-                            <UncontrolledCollapse toggler='#events-list' defaultOpen>
-                                { newEvents }
-                            </UncontrolledCollapse>
-                        </div>
-                        <Button 
-                            block 
-                            className='btn'
-                            id='events-list'
-                            onClick={() => this.showEventList()}>
-                            {this.state.displayEvents
-                                ? <FormattedMessage id='event-list-hide'/>
-                                : <FormattedMessage id='event-list-show'/>
-                            }
-                        </Button>
-                        {this.state.showRecurringEvent &&
-                            <RecurringEvent
-                                toggle={() => this.showRecurringEventDialog()}
-                                isOpen={this.state.showRecurringEvent}
-                                validationErrors={validationErrors}
-                                values={values}
-                                formType={formType}
-                            />
+                            :
+                            <React.Fragment>
+                                <div className={'new-events ' + (this.state.showNewEvents ? 'show' : 'hidden')}>
+                                    <UncontrolledCollapse toggler='#events-list' defaultOpen>
+                                        { newEvents }
+                                    </UncontrolledCollapse>
+                                </div>
+                                <Button 
+                                    block 
+                                    className='btn'
+                                    id='events-list'
+                                    onClick={() => this.showEventList()}>
+                                    {this.state.displayEvents
+                                        ? <FormattedMessage id='event-list-hide'/>
+                                        : <FormattedMessage id='event-list-show'/>
+                                    }
+                                </Button>
+                                {this.state.showRecurringEvent &&
+                                <RecurringEvent
+                                    toggle={() => this.showRecurringEventDialog()}
+                                    isOpen={this.state.showRecurringEvent}
+                                    validationErrors={validationErrors}
+                                    values={values}
+                                    formType={formType}
+                                />
+                                }
+                                <Button
+                                    size='lg'block
+                                    variant="contained"
+                                    disabled={formType === 'update' || formType === 'add' || isSuperEventDisable}
+                                    onClick={() => this.addNewEventDialog()}>
+    
+                                    <span aria-hidden='true' className="glyphicon glyphicon-plus"/>
+                                    <FormattedMessage id="event-add-new-occasion">{txt =>txt}</FormattedMessage>
+                                </Button>
+    
+                                <Button
+                                    size='lg' block
+                                    variant="contained"
+                                    disabled={formType === 'update' || formType === 'add' || isSuperEventDisable}
+                                    onClick={() => this.showRecurringEventDialog()}>
+    
+                                    <span aria-hidden='true' className="glyphicon glyphicon-refresh"/>
+                                    <FormattedMessage id="event-add-recurring">{txt =>txt}</FormattedMessage>
+                                </Button>
+    
+                            </React.Fragment>
                         }
-                        <Button
-                            size='lg'block
-                            variant="contained"
-                            disabled={formType === 'update' || isSuperEventDisable}
-                            onClick={() => this.addNewEventDialog()}>
-
-                            <span aria-hidden='true' className="glyphicon glyphicon-plus"/>
-                            <FormattedMessage id="event-add-new-occasion">{txt =>txt}</FormattedMessage>
-                        </Button>
-
-                        <Button
-                            size='lg' block
-                            variant="contained"
-                            disabled={formType === 'update' || isSuperEventDisable}
-                            onClick={() => this.showRecurringEventDialog()}>
-
-                            <span aria-hidden='true' className="glyphicon glyphicon-refresh"/>
-                            <FormattedMessage id="event-add-recurring">{txt =>txt}</FormattedMessage>
-                        </Button>
+                        
                     </div>
                 </div>
 
@@ -554,21 +653,23 @@ class FormFields extends React.Component {
                                 />
                             </div>
                         </div>
-                        <FormHeader>
-                            <FormattedMessage id="event-umbrella" className=''/>
-                        </FormHeader>
-                        <div className="row umbrella-row">
-                            <SideField label={this.context.intl.formatMessage({id: 'event-umbrella-help'})}>
-                                <p><FormattedMessage id="editor-tip-umbrella-selection"/></p>
-                                <p><FormattedMessage id="editor-tip-umbrella-selection1"/></p>
-                                <FormattedMessage id="editor-tip-umbrella-selection2"/>
-                            </SideField>
-                            <div className="col-sm-6">
-                                {!isRegularUser &&
-                            <UmbrellaSelector editor={this.props.editor} event={event} superEvent={superEvent}/>
-                                }
+                        {formType === 'add' || !isRegularUser &&
+                        <React.Fragment>
+                            <FormHeader>
+                                <FormattedMessage id="event-umbrella" className=''/>
+                            </FormHeader>
+                            <div className="row umbrella-row">
+                                <SideField label={this.context.intl.formatMessage({id: 'event-umbrella-help'})}>
+                                    <p><FormattedMessage id="editor-tip-umbrella-selection"/></p>
+                                    <p><FormattedMessage id="editor-tip-umbrella-selection1"/></p>
+                                    <FormattedMessage id="editor-tip-umbrella-selection2"/>
+                                </SideField>
+                                <div className="col-sm-6">
+                                    <UmbrellaSelector editor={this.props.editor} event={event} superEvent={superEvent}/>
+                                </div>
                             </div>
-                        </div>
+                        </React.Fragment>
+                        }
                     </Collapse>
                 </div>
                 <div>
@@ -884,7 +985,7 @@ FormFields.propTypes = {
     superEvent: PropTypes.object,
     user: PropTypes.object,
     setDirtyState: PropTypes.func,
-    action: PropTypes.oneOf(['update', 'create']),
+    action: PropTypes.oneOf(['update', 'create', 'add']),
     loading: PropTypes.bool,
 }
 

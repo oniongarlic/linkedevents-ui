@@ -50,10 +50,11 @@ const publicValidations = {
     extlink_facebook: [VALIDATION_RULES.IS_URL],
     extlink_twitter: [VALIDATION_RULES.IS_URL],
     extlink_instagram: [VALIDATION_RULES.IS_URL],
-    sub_events: {
+    sub_events: { 
         start_time: [VALIDATION_RULES.REQUIRED_STRING, VALIDATION_RULES.IS_DATE, VALIDATION_RULES.DEFAULT_END_IN_FUTURE],
         end_time: [VALIDATION_RULES.AFTER_START_TIME, VALIDATION_RULES.IS_DATE, VALIDATION_RULES.IN_THE_FUTURE],
     },
+    sub_length: [VALIDATION_RULES.IS_MORE_THAN_TWO],
     keywords: [VALIDATION_RULES.AT_LEAST_ONE_MAIN_CATEGORY],
     audience_min_age: [VALIDATION_RULES.IS_INT],
     audience_max_age: [VALIDATION_RULES.IS_INT],
@@ -108,16 +109,22 @@ function runValidationWithSettings(values, languages, settings, keywordSets) {
                 const error = isEmpty(subEventError) ? null : subEventError
                 errors[eventKey] = error
             })
+
             // validate location & virtual event based on conditional
             // if event is virtual, location is not required
         } else if (key === 'location') {
             errors = validateLocation(values, validations)
+            //validate sub_events length, minium of 2
+        }  else if (key === 'sub_length') {
+            errors = validateSubEventCount(values, validations)
+            //Validate start_time
+        } else if (key === 'start_time') {
+            errors = validateStartTime(values, validations)
 
-        }
         // check is_virtual boolean, is true check that virtualevent_url exists
         // validate virtual_url
         // Check for URL
-        else if (key === 'virtualevent_url') {
+        } else if (key === 'virtualevent_url') {
             errors = validateVirtualURL(values, validations)
 
             // validate offers
@@ -183,6 +190,33 @@ const validateVirtualURL = (values, validations) => {
         })
     } else if (values['is_virtualevent'] && !values['virtualevent_url']) {
         errors.push(validationError)
+    }
+    return errors
+}
+//Validate start_time
+//Check if sub_events exist
+const validateStartTime = (values, validations) => {
+    const errors = []
+    const isSingleMain = !values.hasOwnProperty('sub_events')
+    const subEvent = values.hasOwnProperty('start_time') && isSingleMain
+
+    if (isSingleMain || subEvent) {
+        validations.forEach((val) => {
+            if (!validationFn[val](values, values['start_time'])) {
+                errors.push(val)
+            }
+        })
+    }
+    return errors
+}
+//Validate sub_event count
+const validateSubEventCount = (values, validation) => {
+    let errors = []
+    const eventHasSubEvents = values.hasOwnProperty('sub_events') && !values.hasOwnProperty('start_time')
+    if (eventHasSubEvents) {
+        if (!validationFn[validation](values, values['sub_events'])) {
+            errors = validation
+        }
     }
     return errors
 }
