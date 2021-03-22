@@ -84,7 +84,7 @@ class FormFields extends React.Component {
             headerImage: false,
             displayEvents: true,
         }
-        
+
         this.handleOrganizationChange = this.handleOrganizationChange.bind(this)
         this.toggleHeader = this.toggleHeader.bind(this)
     }
@@ -166,7 +166,7 @@ class FormFields extends React.Component {
 
     addNewEventDialog(recurring = false) {
         let subEventKeys = Object.keys(this.props.editor.values.sub_events)
-        let key = subEventKeys.length > 0 ? Math.max.apply(null, subEventKeys) + 1 : 1
+        let key = subEventKeys.length > 0 ? Math.max.apply(null, subEventKeys) + 1 : 0
         const newEventObject = {[key]: {start_time: undefined}}
         this.context.dispatch(setEventData(newEventObject, key))
         if (recurring) {
@@ -177,8 +177,7 @@ class FormFields extends React.Component {
 
     generateNewEventFields(events) {
         const {validationErrors} = this.props.editor;
-        const subLengthError = Object.assign({}, validationErrors.sub_length);
-        const subEventErrors = {...validationErrors.sub_events, ...subLengthError} || {}
+        const subEventErrors = {...validationErrors.sub_events} || {}
 
         let newEvents = []
         const keys = Object.keys(events)
@@ -194,14 +193,14 @@ class FormFields extends React.Component {
                         event={events[key]}
                         errors={subEventErrors[key] || {}}
                         setInitialFocus={key === lastKey ? true : false}
-                        subError={this.props.editor.validationErrors}
+                        subErrors={this.props.editor.validationErrors}
                     />
                 )
             }
         }
 
         return newEvents
-    }    
+    }
 
     trimmedDescription() {
         let descriptions = Object.assign({}, this.props.editor.values['description'])
@@ -243,7 +242,7 @@ class FormFields extends React.Component {
         }
         this.setState({selectEventType: type});
     }
-    
+
     /**
     * Check that sub_events has property 'start_time' & it's not undefined
     * @param sub_events value
@@ -275,6 +274,7 @@ class FormFields extends React.Component {
         const {VALIDATION_RULES, USER_TYPE} = CONSTANTS
         const addedEvents = pickBy(values.sub_events, event => !event['@id'])
         const newEvents = this.generateNewEventFields(addedEvents)
+        const maxSubEventCount = CONSTANTS.GENERATE_LIMIT.EVENT_LENGTH
         const userType = get(user, 'userType')
         const isRegularUser = userType === USER_TYPE.REGULAR
         const organizationData = get(user, `${userType}OrganizationData`, {})
@@ -286,7 +286,7 @@ class FormFields extends React.Component {
         const headerTextId = formType === 'update'
             ? 'edit-events'
             : 'create-events'
-            
+
         return (
             <div className='mainwrapper'>
                 {!this.props.user &&
@@ -321,7 +321,7 @@ class FormFields extends React.Component {
                     <SideField label={this.context.intl.formatMessage({id: 'event-name-shortdescription-help'})}>
                         <FormattedMessage id='editor-tip-required'>{txt => <small>{txt}</small>}</FormattedMessage>
                         <FormattedMessage id="editor-tip-namedescription">{txt => <p>{txt}</p>}</FormattedMessage>
-                        <FormattedMessage id="editor-tip-namedescription2"/>     
+                        <FormattedMessage id="editor-tip-namedescription2"/>
                     </SideField>
                     <div className="col-sm-6">
                         <MultiLanguageField
@@ -366,7 +366,7 @@ class FormFields extends React.Component {
                     </SideField>
                     <div className="col-sm-6 hel-select">
                         <div>
-                            
+
                             <HelCheckbox
                                 name='is_virtualevent'
                                 label={<FormattedMessage id='event-location-virtual'/>}
@@ -500,9 +500,9 @@ class FormFields extends React.Component {
                                     value='recurring'
                                     checked={this.state.selectEventType}
                                     onChange={this.toggleEventType}
-                                    disabled={formType === 'update' || 
-                                    formType === 'add' || 
-                                    isSuperEventDisable || 
+                                    disabled={formType === 'update' ||
+                                    formType === 'add' ||
+                                    isSuperEventDisable ||
                                     isSuperEvent ||
                                     values.start_time !== undefined}
                                 />
@@ -553,8 +553,8 @@ class FormFields extends React.Component {
                                         { newEvents }
                                     </UncontrolledCollapse>
                                 </div>
-                                <Button 
-                                    block 
+                                <Button
+                                    block
                                     className='btn'
                                     id='events-list'
                                     onClick={() => this.showEventList()}>
@@ -575,32 +575,40 @@ class FormFields extends React.Component {
                                 <Button
                                     size='lg'block
                                     variant="contained"
-                                    disabled={formType === 'update' || formType === 'add' || isSuperEventDisable}
+                                    disabled={formType === 'update' ||
+                                    formType === 'add' ||
+                                    isSuperEventDisable ||
+                                    newEvents.length >= maxSubEventCount
+                                    }
                                     onClick={() => this.addNewEventDialog()}>
-    
+
                                     <span aria-hidden='true' className="glyphicon glyphicon-plus"/>
                                     <FormattedMessage id="event-add-new-occasion">{txt =>txt}</FormattedMessage>
                                 </Button>
-    
+
                                 <Button
                                     size='lg' block
                                     variant="contained"
-                                    disabled={formType === 'update' || formType === 'add' || isSuperEventDisable}
+                                    disabled={formType === 'update' ||
+                                    formType === 'add' ||
+                                    isSuperEventDisable ||
+                                    newEvents.length >= maxSubEventCount
+                                    }
                                     onClick={() => this.showRecurringEventDialog()}>
-    
+
                                     <span aria-hidden='true' className="glyphicon glyphicon-refresh"/>
                                     <FormattedMessage id="event-add-recurring">{txt =>txt}</FormattedMessage>
                                 </Button>
-    
+
                             </React.Fragment>
                         }
-                        
+
                     </div>
                 </div>
 
                 <div>
                     <h2>
-                        <CollapseButton 
+                        <CollapseButton
                             id='headerDescription'
                             isOpen={this.state.headerDescription}
                             targetCollapseNameId='event-description-fields-header'
@@ -674,7 +682,7 @@ class FormFields extends React.Component {
                 </div>
                 <div>
                     <h2>
-                        <CollapseButton 
+                        <CollapseButton
                             id='headerImage'
                             isOpen={this.state.headerImage}
                             targetCollapseNameId='event-picture-header'
@@ -692,7 +700,7 @@ class FormFields extends React.Component {
                 </div>
                 <div>
                     <h2>
-                        <CollapseButton 
+                        <CollapseButton
                             id='headerCategories'
                             isOpen={this.state.headerCategories}
                             isRequired={true}
@@ -732,7 +740,7 @@ class FormFields extends React.Component {
                 </div>
                 <div>
                     <h2>
-                        <CollapseButton 
+                        <CollapseButton
                             id='headerPrices'
                             isOpen={this.state.headerPrices}
                             targetCollapseNameId='event-price-header'
@@ -765,7 +773,7 @@ class FormFields extends React.Component {
                 </div>
                 <div>
                     <h2>
-                        <CollapseButton 
+                        <CollapseButton
                             id='headerSocials'
                             isOpen={this.state.headerSocials}
                             targetCollapseNameId='event-social-header'
@@ -850,7 +858,7 @@ class FormFields extends React.Component {
                 </div>
                 <div>
                     <h2>
-                        <CollapseButton 
+                        <CollapseButton
                             id='headerInlanguage'
                             isOpen={this.state.headerInlanguage}
                             targetCollapseNameId='hel-event-languages'
@@ -879,7 +887,7 @@ class FormFields extends React.Component {
                 {appSettings.ui_mode === 'courses' &&
                 <div>
                     <h2>
-                        <CollapseButton 
+                        <CollapseButton
                             id='headerCourses'
                             isOpen={this.state.headerCourses}
                             targetCollapseNameId='create-courses'
