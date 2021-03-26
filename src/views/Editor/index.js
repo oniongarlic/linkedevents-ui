@@ -65,6 +65,7 @@ export class EditorPage extends React.Component {
 
         this.setState({isRegularUser})
 
+
         if (user && !userHasOrganizations) {
             setFlashMsg('user-no-rights-create', 'error', {sticky: true})
         }
@@ -239,7 +240,7 @@ export class EditorPage extends React.Component {
             if (isDraft && hasOrganizationWithRegularUsers(user)) {
                 this.navigateToModeration();
             } else {
-                routerPush('/')
+                routerPush('/listing')
             }
         }
         // navigate to event view after cancel action

@@ -106,39 +106,6 @@ class App extends React.Component {
         if(this.props.app.confirmAction && this.props.app.confirmAction.actionButtonLabel && this.props.app.confirmAction.actionButtonLabel.length > 0) {
             actionButtonLabel = this.props.app.confirmAction.actionButtonLabel;
         }
-        let organization_missing_msg = null;
-        if (this.props.user && !this.props.user.organization) {
-            if (appSettings.ui_mode === 'courses') {
-                organization_missing_msg =
-                    <div className='organization-missing-msg'>
-                        <h1>
-                            <FormattedMessage id='organization-missing-heading-courses'/>
-                            {this.props.user.displayName}!
-                        </h1>
-                        <p>
-                            <FormattedMessage id='organization-missing-message-courses'/>
-                        </p>
-                        <FormattedMessage id='organization-missing-message1'/>
-                    </div>
-            } else {
-                organization_missing_msg =
-                    <div className='organization-missing-msg'>
-                        <h1>
-                            <FormattedMessage id='organization-missing-heading'/>
-                            {this.props.user.displayName}!
-                        </h1>
-                        <p>
-                            <FormattedMessage id='organization-missing-message'/>
-                            <FormattedMessage id='organization-missing-message-contact'/>
-                            <a href="mailto:matias.peltonen@turku.fi">
-                                <FormattedMessage id='organization-missing-message-contact1'/>
-                            </a>
-                            <FormattedMessage id='organization-missing-message-contact2'/>
-                        </p>
-                        <FormattedMessage id='organization-missing-message1'/>
-                    </div>
-            }
-        }
         return (
             <div className='main-wrapper'>
                 <Helmet>
@@ -147,11 +114,7 @@ class App extends React.Component {
                 <SkipLink />
                 <Favicon />
                 <Headerbar />
-                {this.props.location.pathname == '/' &&
-                    <React.Fragment>
-                        {organization_missing_msg}
-                    </React.Fragment>
-                }
+
                 <main id="main-content" className="content">
                     {this.props.children}
                 </main>

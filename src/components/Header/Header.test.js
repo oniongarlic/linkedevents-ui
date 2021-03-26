@@ -140,7 +140,7 @@ describe('components/Header/index', () => {
                 });
 
                 test('NavLink is active based on location.pathname prop',() => {
-                    const element = getWrapper({location:{pathname:'/'}});
+                    const element = getWrapper({location:{pathname:'/listing'}});
                     let navLinks = element.find(NavLink);
                     expect(navLinks.at(0).prop('strict')).toBe(false);
                     expect(navLinks.at(1).prop('strict')).toBe(false);
